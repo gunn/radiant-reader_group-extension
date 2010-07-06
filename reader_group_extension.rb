@@ -60,9 +60,12 @@ class ReaderGroupExtension < Radiant::Extension
       # admin.messages.index.add :tbody, "admin/messages/group_cell", :after => "subject_cell"
     end
     
-    tab("Readers") do
-      add_item 'groups', '/admin/readers/groups'
+    if respond_to?(:tab)
+      tab("Readers") { add_item 'groups', '/admin/readers/groups' }
+    else
+      admin.tabs['Readers'].add_link('groups', '/admin/readers/groups')
     end
+    
   end
   
   def deactivate
