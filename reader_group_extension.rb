@@ -69,7 +69,7 @@ class ReaderGroupExtension < Radiant::Extension
   end
   
   def deactivate
-    admin.tabs.remove "Groups"
+    # admin.tabs.remove "Groups"
   end
   
 end
