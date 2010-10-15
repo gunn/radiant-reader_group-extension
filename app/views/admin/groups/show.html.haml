@@ -15,7 +15,8 @@
   %ul
     - page = Page.respond_to?(:homepage) ? Page.homepage : Page.find_by_parent_id(nil)
     %div{:id => "page_holder_#{page.id}"}
-      = render :partial => 'admin/permissions/page', :object => page
+      = link_to_remote "Load pages", :url => page_tree_admin_group_permissions_path(@group, :page_id => page.id), :loading => "$('page_holder_#{page.id}').innerHTML='Please be patient, loading may take a while.'", :update => "page_holder_#{page.id}"
+      / = render :partial => 'admin/permissions/page', :object => page
 
 #group_people
   %h2

@@ -16,7 +16,9 @@ class ReaderGroupExtension < Radiant::Extension
 
   define_routes do |map|
     map.namespace :admin, :path_prefix => 'admin/readers' do |admin|
-      admin.resources :groups, :has_many => [:memberships, :permissions, :group_invitations, :messages]
+      admin.resources :groups, :has_many => [:memberships, :group_invitations, :messages] do |group|
+        group.resources :permissions, :collection => { :page_tree => :any }
+      end
     end
     map.resources :groups, :only => [] do |group|
       group.resources :messages, :only => [:index, :show], :member => [:preview]

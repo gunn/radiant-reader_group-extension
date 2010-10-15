@@ -6,6 +6,16 @@ class Admin::PermissionsController < ApplicationController
     redirect_to admin_group_url(@group)
   end
   
+  def page_tree
+    # Allows us to load the page permissions tree via ajax after page load.
+    @page = Page.find(params[:page_id])
+    raise ActiveRecord::RecordNotFound unless @page
+    respond_to do |format|
+      format.html { redirect_to admin_group_url(@group) }
+      format.js { render :partial => 'page' }
+    end
+  end
+  
   def create
     @page = Page.find(params[:page_id])
     raise ActiveRecord::RecordNotFound unless @page

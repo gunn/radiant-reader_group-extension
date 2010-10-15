@@ -32,11 +32,21 @@ class Group < ActiveRecord::Base
   end
 
   def permission_for(page)
-    self.permissions.for(page).first
+    # from 16.5 seconds to 10.5 seconds:
+    # self.permissions.for(page).first
+    self.permissions.each do |p|
+      return p if p.page_id==page.id
+    end
+    nil
   end
 
   def membership_for(reader)
-    self.memberships.for(reader).first
+    # from 2.88 seconds to 0.89 seconds:
+    # self.memberships.for(reader).first
+    self.memberships.each do |m|
+      return m if m.reader_id==reader.id
+    end
+    nil
   end
 
 end
